@@ -31,6 +31,64 @@ module.exports = exports.ArrayT = (M)->
 		@chain (f)-> a.map f
 
 	ArrayT::concat = (a)->
-		ArrayT @run.chain (o)-> M.of o ++ a
+		ArrayT @run.map (++ a)
+
+	ArrayT.empty = -> ArrayT.of!
+
+	ArrayT::reduce = (f, i)->
+		@run.map (.reduce f, i)
+
+	ArrayT::reduce-right = (f, i)->
+		@run.map (.reduce-right f, i)
+
+	ArrayT::take = (n)->
+		ArrayT @run.map (.slice 0 n)
+
+	ArrayT::drop = (n)->
+		ArrayT @run.map (.slice n)
+
+	ArrayT::tail = ->
+		@drop 1
+
+	ArrayT::head = ->
+		@run.map (.0)
+
+	ArrayT::initial = ->
+		@take -1
+
+	ArrayT::last = ->
+		@run.map (a)-> a[a.length - 1]
+
+	ArrayT::reverse = ->
+		ArrayT @reduce-right do
+			(a, x)-> a ++ [x]
+			[]
+
+	ArrayT::len = ->
+		@run.map (.length)
+
+	ArrayT::filter = (f)->
+		ArrayT @run.map (.filter f)
+
+	ArrayT::reject = (f)->
+		ArrayT @run.map (.filter (not) . f)
+
+	ArrayT::find = (f)->
+		@filter f .head!
+
+	ArrayT::mkString = (j = '')->
+		@run.map (.join j)
+
+	ArrayT::every = (f)->
+		@reduce do
+			(a, x)->
+				console.log a,x,(f x),f.to-string!
+				a and f x
+			true
+
+	ArrayT::some = (f)->
+		@reduce do
+			(a, x)-> a or f x
+			true
 
 	ArrayT
