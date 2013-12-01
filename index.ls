@@ -30,4 +30,7 @@ module.exports = exports.ArrayT = (M)->
 	ArrayT::ap = (a)->
 		@chain (f)-> a.map f
 
+	ArrayT::concat = (a)->
+		ArrayT @run.chain (o)-> M.of o ++ a
+
 	ArrayT
