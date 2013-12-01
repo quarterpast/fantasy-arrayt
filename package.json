@@ -1,0 +1,19 @@
+{
+  "name": "fantasy-arrayt",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matt Brennan <mwrbrennan@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "LiveScript": "~1.2.0",
+    "fantasy-identities": "0.0.1",
+    "aver": "0.0.2"
+  },
+  "dependencies": {
+    "daggy": "0.0.1"
+  }
+}
