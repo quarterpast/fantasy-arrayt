@@ -4,7 +4,7 @@ module.exports = exports.ArrayT = (M)->
 	ArrayT = daggy.tagged \run
 
 	sequence = (m, ms)-->
-		ms.reduce-right do
+		ms.reduce do
 			(m1, m2)->
 				x  <- m1.chain
 				xs <- m2.chain
