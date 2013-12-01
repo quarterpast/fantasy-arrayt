@@ -21,47 +21,47 @@ describe "ArrayT" ->
 		.run.x `assert.equal` 10
 	should "be a monoid" ->
 		"concat" `should` ->
-			(ArrayIdentity.of 5) ++ (ArrayIdentity.of 5)
-			.run.x `assert.equal` [5 5]
+			((ArrayIdentity.of 5) ++ (ArrayIdentity.of 5))
+			.run.x `assert.deep-equal` [5 5]
 		"empty" `should` ->
-			ArrayIdentity.empty!.run.x `assert.equal` void
+			ArrayIdentity.empty!.run.x `assert.deep-equal` []
 
 	should "have some array methods" ->
 		"reduce" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .reduce (+),0
 			.x `assert.equal` 55
 		"reduce-right" `should` ->
-			ArrayIdentity Identity.of ['a' to 'e'] .reduce-right (+)
+			ArrayIdentity Identity.of ['a' to 'e'] .reduce-right (+), ''
 			.x `assert.equal` 'edcba'
 		"take" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .take 5
-			.run.x `assert.equal` [1 to 5]
+			.run.x `assert.deep-equal` [1 to 5]
 		"drop" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .drop 5
-			.run.x `assert.equal` [6 to 10]
+			.run.x `assert.deep-equal` [6 to 10]
 		"tail" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .tail!
-			.run.x `assert.equal` [2 to 10]
+			.run.x `assert.deep-equal` [2 to 10]
 		"head" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .head!
 			.x `assert.equal` 1
 		"initial" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .initial!
-			.run.x `assert.equal` [1 to 9]
+			.run.x `assert.deep-equal` [1 to 9]
 		"last" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .last!
 			.x `assert.equal` 10
 
-		even = (% 2 is 0)
+		even = (is 0) . (% 2)
 		"filter" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .filter even
-			.run.x `assert.equal` [2 4 6 8 10]
+			.run.x `assert.deep-equal` [2 4 6 8 10]
 		"reject" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .reject even
-			.run.x `assert.equal` [1 3 5 7 9]
+			.run.x `assert.deep-equal` [1 3 5 7 9]
 		"find" `should` ->
-			console.log <| ArrayIdentity Identity.of [1 to 10] .filter even .run.x
-			#.x `assert.equal` 2
+			console.log <| ArrayIdentity Identity.of [1 to 10] .find even
+			.x `assert.equal` 2
 		"mkString" `should` ->
 			ArrayIdentity Identity.of ['a' to 'e'] .mk-string!
 			.x `assert.equal` 'abcde'
@@ -81,5 +81,5 @@ describe "ArrayT" ->
 			ArrayIdentity Identity.of [1 to 10] .len!.x `assert.equal` 10
 		"reverse" `should` ->
 			ArrayIdentity Identity.of [1 to 10] .reverse!
-			.run.x `assert.equal` [10 to 1]
+			.run.x `assert.deep-equal` [10 to 1]
 

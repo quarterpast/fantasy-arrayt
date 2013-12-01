@@ -31,9 +31,9 @@ module.exports = exports.ArrayT = (M)->
 		@chain (f)-> a.map f
 
 	ArrayT::concat = (a)->
-		ArrayT @run.map (++ a)
+		ArrayT sequence M, [@run, a.run]
 
-	ArrayT.empty = -> ArrayT.of!
+	ArrayT.empty = -> ArrayT M.of []
 
 	ArrayT::reduce = (f, i)->
 		@run.map (.reduce f, i)
@@ -81,14 +81,12 @@ module.exports = exports.ArrayT = (M)->
 
 	ArrayT::every = (f)->
 		@reduce do
-			(a, x)->
-				console.log a,x,(f x),f.to-string!
-				a and f x
+			(a, x)-> a and f x
 			true
 
 	ArrayT::some = (f)->
 		@reduce do
 			(a, x)-> a or f x
-			true
+			false
 
 	ArrayT
