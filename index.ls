@@ -11,9 +11,6 @@ module.exports = exports.ArrayT = (M)->
 				m.of x ++ xs
 			m.of []
 
-	ArrayT::fold = (f,g)->
-		@run.chain (o)-> M.of o.fold f,g
-
 	ArrayT.of = (x)->
 		ArrayT M.of [x]
 
